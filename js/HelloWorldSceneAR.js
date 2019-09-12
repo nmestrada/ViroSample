@@ -18,16 +18,22 @@ import {
   ViroAnimations
 } from 'react-viro';
 
+const objArray = [
+    require('./res/emoji_smile/emoji_smile.vrx'),
+    require('./res/emoji_wow/emoji_wow.vrx'),
+    require('./res/emoji_poop/emoji_poop.vrx')];
 
 export default class HelloWorldSceneAR extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     // Set initial state here
     this.state = {
       text : "Initializing AR...",
-      object: {displayObject:true, objectSource:require('./res/coffee_mug/object_coffee_mug.vrx'), x:0,y:0,z:0}
+      object: {displayObject:true, objectSource:require('./res/coffee_mug/object_coffee_mug.vrx'), x:0,y:0,z:0},
+      selectedObject: objArray[this.props.objectIndex],
+      displayObject: this.props.showObject
     };
 
     // bind 'this' to functions
@@ -60,9 +66,9 @@ export default class HelloWorldSceneAR extends Component {
                         ref={component => (this._Viro3DObject = component)}
                         type="VRX" />
         </ViroNode>
-        <ViroNode position={[0,-1,0]} dragType="FixedToWorld" onDrag={()=>{}} >
+        <ViroNode  position={[0,-1,0]} dragType="FixedToWorld" onDrag={()=>{}} >
             <Viro3DObject
-                        source={require('./res/emoji_poop/emoji_poop.vrx')}
+                        source={objArray[0]}
                         position={[-0.5, 0, -0.5]}
                         scale={[.2, .2, .2]}
                         type="VRX" />

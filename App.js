@@ -47,29 +47,35 @@ export default class ViroSample extends Component {
     super();
 
     this.state = {
-      sharedProps : sharedProps
+      sharedProps : sharedProps,
+      objectIndex: 0,
+      showObject: false
     }
     // this._getARNavigator = this._getARNavigator.bind(this);
   }
   selectEmoji = () => {
     Alert.alert(
+        'Pick an emoji',
         'Select an emoji to place in the world!',
-        // [
-        //   {text: 'Smiley', onPress: () => this.onShowObject(0, "smile_emoji", 0)},
-        //   {text: 'Wow', onPress: () => this.onShowObject(1, "wow_emoji", .290760)},
-        //   {text: 'Poop', onPress: () => this.onShowObject(2, "poop_emoji", .497823)},
-        // ],
+        [
+          {text: 'Smiley', onPress: () => this.onShowObject(0, "smile_emoji", 0)},
+          {text: 'Wow', onPress: () => this.onShowObject(1, "wow_emoji", .290760)},
+          {text: 'Poop', onPress: () => this.onShowObject(2, "poop_emoji", .497823)},
+        ],
     );
   }
-//   onShowObject(objIndex, objUniqueName, yOffset) {
-//     console.log('hello!')
-//   }
+  onShowObject = (objIndex, objUniqueName, yOffset) => {
+    this.setState({
+        objectIndex: objIndex,
+        showObject:true
+    })
+  }
   // Replace this function with the contents of _getVRNavigator() or _getARNavigator()
   // if you are building a specific type of experience.
   render() {
     return (
         <View style={localStyles.outer}>
-            <ViroARSceneNavigator {...this.state.sharedProps} initialScene={{scene: InitialARScene}} />
+            <ViroARSceneNavigator {...this.state.sharedProps} initialScene={{scene: InitialARScene}} objectIndex={this.state.objectIndex} showObject={this.state.showObject} />
             <View style={localStyles.navBar}>
                 <TouchableOpacity>
                     <Text style={localStyles.titleText} onPress={this.selectEmoji} >
