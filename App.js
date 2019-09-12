@@ -10,17 +10,20 @@
 import React, { Component } from 'react';
 import {
   AppRegistry,
+  Alert,
   Text,
   View,
   StyleSheet,
   PixelRatio,
   TouchableHighlight,
+  TouchableOpacity,
   ViroBox,
   ViroMaterials
 } from 'react-native';
 
 import {
-  ViroARSceneNavigator
+  ViroARSceneNavigator,
+  ViroARScene
 } from 'react-viro';
 
 /*
@@ -44,27 +47,46 @@ export default class ViroSample extends Component {
     super();
 
     this.state = {
-      navigatorType : AR_NAVIGATOR_TYPE,
       sharedProps : sharedProps
     }
-    this._getARNavigator = this._getARNavigator.bind(this);
+    // this._getARNavigator = this._getARNavigator.bind(this);
   }
-
+  selectEmoji = () => {
+    Alert.alert(
+        'Select an emoji to place in the world!',
+        // [
+        //   {text: 'Smiley', onPress: () => this.onShowObject(0, "smile_emoji", 0)},
+        //   {text: 'Wow', onPress: () => this.onShowObject(1, "wow_emoji", .290760)},
+        //   {text: 'Poop', onPress: () => this.onShowObject(2, "poop_emoji", .497823)},
+        // ],
+    );
+  }
+//   onShowObject(objIndex, objUniqueName, yOffset) {
+//     console.log('hello!')
+//   }
   // Replace this function with the contents of _getVRNavigator() or _getARNavigator()
   // if you are building a specific type of experience.
   render() {
-    return this._getARNavigator();
-  }
-
-
-  // Returns the ViroARSceneNavigator which will start the AR experience
-  _getARNavigator() {
     return (
-      <ViroARSceneNavigator {...this.state.sharedProps}
-        initialScene={{scene: InitialARScene}} />
-    );
+        <View style={localStyles.outer}>
+            <ViroARSceneNavigator {...this.state.sharedProps} initialScene={{scene: InitialARScene}} />
+            <View style={localStyles.navBar}>
+                <TouchableOpacity>
+                    <Text style={localStyles.titleText} onPress={this.selectEmoji} >
+                        Pick an Emoji!
+                     </Text>
+                </TouchableOpacity>
+            </View>
+        </View>
+      );
   }
+
 }
+  // Returns the ViroARSceneNavigator which will start the AR experience
+//   _getARNavigator() {
+//     return 
+//   }
+// }
   // This function returns an anonymous/lambda function to be used
   // by the experience selector buttons
 
@@ -111,6 +133,15 @@ const localStyles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: '#fff',
+  },
+  navBar: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 30
   },
   exitButton : {
     height: 50,

@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 
-import {StyleSheet, Alert} from 'react-native';
+import {StyleSheet, Alert, TouchableOpacity} from 'react-native';
 
 import {
   ViroARScene,
@@ -27,8 +27,7 @@ export default class HelloWorldSceneAR extends Component {
     // Set initial state here
     this.state = {
       text : "Initializing AR...",
-      object: {displayObject:true, objectSource:require('./res/coffee_mug/object_coffee_mug.vrx'), x:0,y:0,z:0},
-      rotation: [0,0,0]
+      object: {displayObject:true, objectSource:require('./res/coffee_mug/object_coffee_mug.vrx'), x:0,y:0,z:0}
     };
 
     // bind 'this' to functions
@@ -54,14 +53,14 @@ export default class HelloWorldSceneAR extends Component {
           />
         <ViroNode position={[0,-1,0]} dragType="FixedDistanceOrigin" onDrag={()=>{}} >
             <Viro3DObject
-                        source={this.state.object.objectSource}
+                        source={object.objectSource}
                         position={[0, 0.5, -0.5]}
                         scale={[.2, .2, .2]}
                         onRotate={this._onRotate}
-                        ref={VR => (this._Viro3DObject = VR)}
+                        ref={component => (this._Viro3DObject = component)}
                         type="VRX" />
         </ViroNode>
-        <ViroNode position={[0,-1,0]} dragType="FixedDistanceOrigin" onDrag={()=>{}} >
+        <ViroNode position={[0,-1,0]} dragType="FixedToWorld" onDrag={()=>{}} >
             <Viro3DObject
                         source={require('./res/emoji_poop/emoji_poop.vrx')}
                         position={[-0.5, 0, -0.5]}
