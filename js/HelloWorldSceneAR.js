@@ -61,6 +61,13 @@ export default class HelloWorldSceneAR extends Component {
                         ref={VR => (this._Viro3DObject = VR)}
                         type="VRX" />
         </ViroNode>
+        <ViroNode position={[0,-1,0]} dragType="FixedDistanceOrigin" onDrag={()=>{}} >
+            <Viro3DObject
+                        source={require('./res/emoji_poop/emoji_poop.vrx')}
+                        position={[-0.5, 0, -0.5]}
+                        scale={[.2, .2, .2]}
+                        type="VRX" />
+        </ViroNode>
       </ViroARScene>
     );
   }
