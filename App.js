@@ -48,8 +48,7 @@ export default class ViroSample extends Component {
 
     this.state = {
       sharedProps : sharedProps,
-      objectIndex: 0,
-      showObject: false
+      viroAppProps: {objectIndex:0, showObject:false}
     }
     // this._getARNavigator = this._getARNavigator.bind(this);
   }
@@ -65,17 +64,17 @@ export default class ViroSample extends Component {
     );
   }
   onShowObject = (objIndex, objUniqueName, yOffset) => {
-    this.setState({
+    this.setState({viroAppProps: {
         objectIndex: objIndex,
         showObject:true
-    })
+    }})
   }
   // Replace this function with the contents of _getVRNavigator() or _getARNavigator()
   // if you are building a specific type of experience.
   render() {
     return (
         <View style={localStyles.outer}>
-            <ViroARSceneNavigator {...this.state.sharedProps} initialScene={{scene: InitialARScene}} objectIndex={this.state.objectIndex} showObject={this.state.showObject} />
+            <ViroARSceneNavigator {...this.state.sharedProps} initialScene={{scene: InitialARScene}} viroAppProps={this.state.viroAppProps} />
             <View style={localStyles.navBar}>
                 <TouchableOpacity>
                     <Text style={localStyles.titleText} onPress={this.selectEmoji} >

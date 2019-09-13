@@ -15,7 +15,8 @@ import {
   ViroSpotLight,
   ViroARPlaneSelector,
   ViroNode,
-  ViroAnimations
+  ViroAnimations,
+  ViroButton
 } from 'react-viro';
 
 const objArray = [
@@ -32,7 +33,7 @@ export default class HelloWorldSceneAR extends Component {
     this.state = {
       text : "Initializing AR...",
       object: {displayObject:true, objectSource:require('./res/coffee_mug/object_coffee_mug.vrx'), x:0,y:0,z:0},
-      selectedObject: objArray[this.props.objectIndex],
+      selectedObject: objArray[this.props.sceneNavigator.viroAppProps.objectIndex],
       displayObject: this.props.showObject
     };
 
@@ -42,6 +43,7 @@ export default class HelloWorldSceneAR extends Component {
 
   render() {
     const object = this.state.object;
+    console.log(this.state.selectedObject)
     return (
       <ViroARScene onTrackingUpdated={this._onInitialized} >
         <ViroText text={this.state.text} scale={[.5, .5, .5]} position={[0, 0, -1]} style={styles.helloWorldTextStyle} />
@@ -66,15 +68,30 @@ export default class HelloWorldSceneAR extends Component {
                         ref={component => (this._Viro3DObject = component)}
                         type="VRX" />
         </ViroNode>
-        <ViroNode  position={[0,-1,0]} dragType="FixedToWorld" onDrag={()=>{}} >
+        <ViroNode  visible={this.state.displayObject} position={[0,-1,0]} dragType="FixedDistanceOrigin" onDrag={()=>{}} >
             <Viro3DObject
-                        source={objArray[0]}
+                        ref={component => (this._emoji = component)}
+                        source={this.state.selectedObject}
                         position={[-0.5, 0, -0.5]}
                         scale={[.2, .2, .2]}
                         type="VRX" />
         </ViroNode>
+        <ViroARPlaneSelector>
+            <ViroNode position={[0,-1,-1]} dragType="FixedToPlane" onDrag={()=>{}}>
+            <ViroBox
+                height={.5}
+                length={.5}
+                width={.5}
+                materials={["grid"]} />
+            </ViroNode>
+        </ViroARPlaneSelector>
       </ViroARScene>
     );
+  }
+
+
+  setEmojiSource = (component) => {
+    let emoji = this.state.selectedObject;
   }
   _setSpotLightRef(component) {
     this.spotLight = component;
